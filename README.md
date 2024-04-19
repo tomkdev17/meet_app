@@ -4,6 +4,11 @@ The Meet application is a react powered application that makes use of the google
 
 The creation of this app is following the Test Driven Development process (TDD) . 
 
+
+Exercise 4.2 justification : This application will use serverless functions to facilitate the communication between the the authentication provider (google), the Google Calendar API, and the user. Without serverless functionality, the application would require its own server to make these authentication requests and API calls. Because of the potential for drastic changes in scale of usage for this application, it makes sense to use serverless architecture in order to provide a flexible and economical way for the front-end app to communicate with its necessary back-end components. 
+
+
+
 Below are listed several User Stories as well as scenarios that follow Gherkin's "Given, When, Then" syntax. 
 
 User Stories
