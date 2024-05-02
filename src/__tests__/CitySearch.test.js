@@ -1,15 +1,15 @@
-import { render } from '@testing-library/react';
+import { render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
 import { extractLocations, getEvents } from '../api';
-import { getEventListeners } from 'events';
+import App from '../App';
 
 describe('<CitySearch /> component', () => {
 
     let citySearchComponent;
 
     beforeEach( () => {
-        citySearchComponent = render(<CitySearch />);
+        citySearchComponent = render(<CitySearch allLocations={[]} />);
     });
 
     test('renders a text input', () => {
@@ -53,7 +53,7 @@ describe('<CitySearch /> component', () => {
         const user = userEvent.setup();
         const allEvents = await getEvents(); 
         const allLocations = extractLocations(allEvents);
-        citySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+        citySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => {}} />);
     
         const cityTextBox = citySearchComponent.queryByRole('textbox');
         await user.type(cityTextBox, "Berlin");
@@ -65,4 +65,23 @@ describe('<CitySearch /> component', () => {
     
         expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
       });
+});
+
+describe('<CitySearch /> integration', () => {
+
+    test('renders suggestions list when the app is rendered.', async () => {
+        const user = userEvent.setup();
+        const AppComponent = render(<App />);
+        const AppDOM = AppComponent.container.firstChild;
+    
+        const CitySearchDOM = AppDOM.querySelector('#city-search');
+        const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
+        await user.click(cityTextBox);
+    
+        const allEvents = await getEvents();
+        const allLocations = extractLocations(allEvents);
+    
+        const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
+        expect(suggestionListItems.length).toBe(allLocations.length + 1);
+     });
 });
