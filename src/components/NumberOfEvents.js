@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-const NumberOfEvents = () => {
+const NumberOfEvents = ({currentNOE, setCurrentNOE}) => {
 
-    const [eventsNumber, setEventsNumber] = useState(32);
+    // const [eventsNumber, setEventsNumber] = useState(32);
 
     const handleNumberChange = (event) => {
         const value = event.target.value;
-        setEventsNumber(value);
+        // setEventsNumber(value);
+        setCurrentNOE(value);
     };
 
     return(
@@ -16,7 +17,7 @@ const NumberOfEvents = () => {
                 type='text'
                 className='number'
                 placeholder='32'
-                value={eventsNumber}
+                value={currentNOE}
                 onChange={handleNumberChange}
             />
         </div>
