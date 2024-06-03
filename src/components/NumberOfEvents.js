@@ -1,13 +1,21 @@
 import { useState } from 'react';
 
-const NumberOfEvents = ({currentNOE, setCurrentNOE}) => {
-
-    // const [eventsNumber, setEventsNumber] = useState(32);
+const NumberOfEvents = ({currentNOE, setCurrentNOE, setErrorAlert}) => {
 
     const handleNumberChange = (event) => {
         const value = event.target.value;
-        // setEventsNumber(value);
-        setCurrentNOE(value);
+        let errorText;
+        // const numberValue = Number(value);
+
+        if (isNaN(value) || value < 1 ) {
+            errorText = 'Please select a positive integer for the number of events';
+            setCurrentNOE(undefined);
+        } else{
+            errorText = '';
+            setCurrentNOE(value);
+            console.log('setting currentNOE:', value);
+        }
+        setErrorAlert(errorText);
     };
 
     return(
@@ -25,3 +33,5 @@ const NumberOfEvents = ({currentNOE, setCurrentNOE}) => {
 };
 
 export default NumberOfEvents;
+
+// || numberValue <= 0
