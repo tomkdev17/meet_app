@@ -10,7 +10,7 @@ describe('<NumberOfEvents /> component', () => {
     let numberOfEvents ; 
 
     beforeEach( () => {
-        numberOfEvents = render(<NumberOfEvents setCurrentNOE={setCurrentNOE} />);
+        numberOfEvents = render(<NumberOfEvents setCurrentNOE={setCurrentNOE} setErrorAlert={() => {}} />);
     });
 
     test('NumberOfEvents renders a textbox', () => {
@@ -26,7 +26,7 @@ describe('<NumberOfEvents /> component', () => {
     test('NumberOfEvents value changes with user input', async () => {
         const user = userEvent.setup();
         const inputField = numberOfEvents.queryByRole('textbox');
-        numberOfEvents.rerender(<NumberOfEvents setCurrentNOE={() => {}}/>);
+        numberOfEvents.rerender(<NumberOfEvents setCurrentNOE={() => {}} setErrorAlert={() => {}} />);
         await user.type(inputField, '{backspace}{backspace}10');
         
         expect(inputField.value).toBe('10');
@@ -42,7 +42,7 @@ describe('<NumberOfEvents /> integration', () => {
         const NoeDOM = AppDOM.querySelector('#number-of-events');
         const NoeInput = within(NoeDOM).queryByRole('textbox');
 
-        await user.type(NoeInput, '{backspace}{backspace} 10');
+        await user.type(NoeInput, '{backspace}{backspace}10');
 
         const EventListDOM = AppDOM.querySelector('#event-list');
         const allRenderedEventItems = within(EventListDOM).queryAllByRole('listitem');

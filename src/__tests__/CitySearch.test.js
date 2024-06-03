@@ -9,7 +9,7 @@ describe('<CitySearch /> component', () => {
     let citySearchComponent;
 
     beforeEach( () => {
-        citySearchComponent = render(<CitySearch allLocations={[]} />);
+        citySearchComponent = render(<CitySearch allLocations={[]} setInfoAlert={() => {}}/>);
     });
 
     test('renders a text input', () => {
@@ -36,7 +36,7 @@ describe('<CitySearch /> component', () => {
         const user = userEvent.setup();
         const allEvents = await getEvents();
         const allLocations = extractLocations(allEvents);
-        citySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
+        citySearchComponent.rerender(<CitySearch allLocations={allLocations} setInfoAlert={() => {}} />);
         const cityTextBox = citySearchComponent.queryByRole('textbox');
         await user.type(cityTextBox, 'Berlin');
         const suggestions = allLocations ? allLocations.filter((location) => {
@@ -53,7 +53,7 @@ describe('<CitySearch /> component', () => {
         const user = userEvent.setup();
         const allEvents = await getEvents(); 
         const allLocations = extractLocations(allEvents);
-        citySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => {}} />);
+        citySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => {}} setInfoAlert={() => {}} />);
     
         const cityTextBox = citySearchComponent.queryByRole('textbox');
         await user.type(cityTextBox, "Berlin");
