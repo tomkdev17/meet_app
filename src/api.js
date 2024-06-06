@@ -49,7 +49,7 @@ export const getEvents = async () => {
         return mockData;
     };
 
-    if(!navigator.online) {
+    if(!navigator.onLine) {
         const events =  localStorage.getItem('lastEvents');
         return events ? JSON.parse(events) : [];
     };
